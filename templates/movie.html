@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <img src="{{ poster }}" alt="Movie Poster">
+    <p id="summary">{{ summary }}</p>
+    <button id="speak-button">Speak Summary</button>
+    <a href="/">Back to search</a>
+    
+    <script>
+        document.getElementById('speak-button').addEventListener('click', function() {
+            const summary = document.getElementById('summary').innerText;
+            fetch('/speak', {
+                method: 'POST',
+                body: JSON.stringify({ text: summary }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+        });
+    </script>
+</body>
+</html>
