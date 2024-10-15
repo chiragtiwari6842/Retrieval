@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Quality Assessment Tool</title>
+</head>
+<body>
+    <h1>Audio Quality Assessment Tool</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <label for="audio">Upload Audio File:</label>
+        <input type="file" name="audio" accept="audio/*" required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if metrics %}
+    <h2>Audio Quality Metrics:</h2>
+    <ul>
+        <li>Noise Level: {{ metrics.noise_level }}</li>
+        <li>Dynamic Range: {{ metrics.dynamic_range }}</li>
+        <li>Quality Score: {{ metrics.score }}</li>
+    </ul>
+    <h2>Enhanced Audio:</h2>
+    <audio controls>
+        <source src="{{ url_for('play_audio', filename='enhanced_' + metrics.filename) }}" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+    {% endif %}
+</body>
+</html>
