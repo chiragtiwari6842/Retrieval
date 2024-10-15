@@ -1,6 +1,6 @@
-Flask==2.2.2  
+Flask==2.2.2
 Werkzeug==2.2.3
-pydub==0.25.1 
-librosa==0.9.2  
-numpy==1.23.5  
-PyAudio==0.2.13
+pydub==0.25.1
+librosa==0.9.2
+numpy==1.23.5
+sounddevice==0.4.6
