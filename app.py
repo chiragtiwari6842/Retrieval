@@ -65,5 +65,5 @@ def play_audio(filename):
     return send_file(file_path, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
+    app.run(host='123.123.123.1', port=10000)
 
