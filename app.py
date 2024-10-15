@@ -3,8 +3,7 @@ import os
 from pydub import AudioSegment
 import librosa
 import numpy as np
-import tempfile
-import sounddevice as sd
+import simpleaudio as sa
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -55,10 +54,16 @@ def play_audio(filename):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     # Load audio data for playback
     y, sr = librosa.load(file_path, sr=None)
-    sd.play(y, samplerate=sr)
-    sd.wait()  # Wait until the sound has finished playing
+
+    # Convert to numpy array and normalize
+    y_normalized = (y * 32767).astype(np.int16)
+
+    # Play audio using simpleaudio
+    play_obj = sa.play_buffer(y_normalized, 1, 2, sr)
+    play_obj.wait_done()  # Wait until playback is finished
+    
     return send_file(file_path, as_attachment=True)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  
+    port = int(os.environ.get("PORT", 5000))  # Use the PORT environment variable
     app.run(host='0.0.0.0', port=port, debug=True)
