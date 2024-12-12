@@ -14,11 +14,10 @@ def analyze_audio(file_path):
     y, sr = librosa.load(file_path, sr=None)
 
     # Calculate audio quality metrics
-    noise_level = np.mean(np.abs(y))  # Example noise level assessment
-    dynamic_range = np.max(y) - np.min(y)  # Dynamic range
-    frequency_response = np.fft.fft(y)  # Frequency response
+    noise_level = np.mean(np.abs(y))  
+    dynamic_range = np.max(y) - np.min(y)  
+    frequency_response = np.fft.fft(y)  
 
-    # Score (this is a simple scoring system; improve as needed)
     score = (1 - noise_level) * (dynamic_range / np.max(np.abs(y)))
 
     return {
@@ -52,13 +51,13 @@ def index():
 @app.route('/play/<filename>')
 def play_audio(filename):
     file_path = os.path.join(UPLOAD_FOLDER, filename)
-    # Load audio data for playback
+    
     y, sr = librosa.load(file_path, sr=None)
 
-    # Convert to numpy array and normalize
+    
     y_normalized = (y * 32767).astype(np.int16)
 
-    # Play audio using simpleaudio
+    
     play_obj = sa.play_buffer(y_normalized, 1, 2, sr)
     play_obj.wait_done()  # Wait until playback is finished
     
